@@ -1,0 +1,838 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        {% if profile.error is same as('NoPlayer') %}
+                            Utilisateur introuvable
+                        {% else %}
+                            Profile de {{  profile.player.name }}
+                        {% endif %}
+                    </h4>
+                    <h4><!-- BadgesHERE --></h4>
+                    {% if not profile.error is same as('NoPlayer') %}
+                    <div class="tab-minimal tab-minimal-success">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tab-1-1" data-toggle="tab" href="#general-2-1" role="tab" aria-controls="general-2-1" aria-selected="true"><i class="mdi mdi-account-box"></i>Général</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="cursor: pointer;" id="tab-1-9" data-toggle="modal" data-target="#Licences" aria-controls="licence-2-9" aria-selected="false"><i class="mdi mdi-account-card-details"></i>Licence</a>
+                            </li>
+                            {% if permission.view.vehicle %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-2" data-toggle="tab" href="#vehicule-2-2" role="tab" aria-controls="vehicule-2-2" aria-selected="false"><i class="mdi mdi-car-side"></i>Véhciule</a>
+                            </li>
+                            {% endif %}{% if permission.view.home %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-3" data-toggle="tab" href="#maison-2-3" role="tab" aria-controls="maison-2-3" aria-selected="false"><i class="mdi mdi-home-outline"></i>Maison</a>
+                            </li>
+                            {% endif %}{% if permission.view.container %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-6" data-toggle="tab" href="#conteneur-2-6" role="tab" aria-controls="conteneur-2-6" aria-selected="false"><i class="mdi mdi-treasure-chest"></i>Conteneur</a>
+                            </li>
+                            {% endif %}{% if permission.view.gang %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-4" data-toggle="tab" href="#gang-2-4" role="tab" aria-controls="gang-2-4" aria-selected="false"><i class="mdi mdi-account-group"></i>Gang</a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-5" data-toggle="tab" href="#sanction-2-5" role="tab" aria-controls="sanction-2-5" aria-selected="false"><i class="mdi mdi-account-minus"></i>Sanction</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-5" data-toggle="tab" href="#remboursement"role="tab" aria-controls="remboursement" aria-selected="false"><i class="mdi mdi-notebook"></i>Remboursement</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-7" data-toggle="modal" data-target="#VitrualInv" href="#inventairev-2-7" aria-controls="inventairev-2-7" aria-selected="false"><i class="mdi mdi-folder-account"></i>Inventaire Virtuel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-1-8" data-toggle="tab" href="#inventairep-2-8" role="tab" aria-controls="inventairep-2-8" aria-selected="false"><i class="mdi mdi-folder-account"></i>Inventaire Physique</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Général -->
+                            <div class="tab-pane fade show active" id="general-2-1" role="tabpanel"
+                                 aria-labelledby="tab-1-1">
+                                <div class="card-body">
+                                    <h4 class="card-title">Information Général</h4>
+                                    <ul class="bullet-line-list">
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Nom RolePlay</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0">{{ profile.player.name }}</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Alias</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0">{{ profile.player.alias }}</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Première Connexion / Dernière connexion</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0">{{ profile.player.connect_first  ~ ' / ' ~ profile.player.connect_last }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Temps de Jeux</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0">{{ profile.player.playtime }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Argent Cash</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0" id="cash">{{ profile.player.cash }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Compte Bancaire</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0" id="bank">{{ profile.player.bank }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Cop Level</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0" id="coplvl">{{ profile.player.coplevel }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Medic Level</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0" id="medlvl">{{ profile.player.mediclevel }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Admin Level</h6>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="d-flex align-items-center"><p class="mb-0" id="adminlvl">{{ profile.player.adminlevel }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% if permission.A %}
+                                        <li>
+                                            <div class="list d-flex align-items-center border-bottom py-3">
+                                                <div class="wrapper w-100 ml-3">
+                                                    <h6>Actions</h6>
+                                                    <div class="d-flex justify-content-start">
+                                                        {% if permission.edit.players.edit %}
+                                                        <p class="mb-0" style="padding-right: 7px;">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-success"
+                                                                    data-toggle="modal"
+                                                                    data-target="#editiongeneral">Editer
+                                                            </button>
+                                                        </p>
+                                                      {% endif %}{% if permission.edit.players.delete %}
+                                                        <p class="mb-0" style="padding-right: 7px;">
+                                                            <button type="button"
+                                                                    class="btn btn-outline-danger"
+                                                                    data-toggle="modal"
+                                                                    data-target="#supprutilisateur">
+                                                                Supprimer
+                                                            </button>
+                                                        </p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Fin Général -->
+                            <?php if (!isset($VehicleAccessDenied)) { // Début Véhicule ?>
+                            <!-- Véhicule -->
+                            <div class="tab-pane fade" id="vehicule-2-2" role="tabpanel"
+                                 aria-labelledby="tab-1-2">
+                                <!-- Début DataTable -->
+                                <h4 class="card-title">Liste des véhicules</h4>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table id="vehicleTab" class="table" cellspacing="0">
+                                            {{ table_vehicle|raw }}
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Fin DataTable -->
+                            </div>
+                            <!-- Fin Véhicule -->
+                            <?php } // Fin Véhicule ?>
+                            <!-- Début Maison -->
+                            <div class="tab-pane fade" id="maison-2-3" role="tabpanel"
+                                 aria-labelledby="tab-1-3">
+                                <!-- Début DataTable -->
+                                <h4 class="card-title">Liste des Residences</h4>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table id="homeTable" class="table" cellspacing="0">
+                                            {{ table_house|raw }}
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Fin DataTable -->
+                            </div>
+                            <!-- Fin Maison -->
+                            <!-- Début Gang -->
+                            <div class="tab-pane fade" id="gang-2-4" role="tabpanel" aria-labelledby="tab-1-4">
+                                <!-- Début DataTable -->
+                                <h4 class="card-title"><?php if (!isset($NoVehicle)) {
+                                            echo "Gang du Joueur";
+                                        } else {
+                                            echo "Aucun Gang";
+                                        } ?></h4>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table" cellspacing="0">
+                                            <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Nom</th>
+                                                <th>PID</th>
+                                                <th>Type</th>
+                                                <th>Membres</th>
+                                                <th>Membres Max</th>
+                                                <th>Banque</th>
+                                                <th>Création</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><i class="mdi mdi-account-group"></i></td>
+                                                <td>1</td>
+                                                <td>76561198251148288</td>
+                                                <td>Teste</td>
+                                                <td>["76561198251148288"]</td>
+                                                <td>16</td>
+                                                <td>999800</td>
+                                                <td>2019-08-27 21:28:03</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Fin DataTable -->
+                            </div>
+                            <!-- Fin Gang -->
+                            <!-- Début Sanction -->
+                            <div class="tab-pane fade" id="sanction-2-5" role="tabpanel" aria-labelledby="tab-1-5">
+                                <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target="#addSanction">Ajouter une sanction</button>
+                                <table id="order-listing" class="table" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Nom</th>
+                                        <th>PID</th>
+                                        <th>Type</th>
+                                        <th>Raison</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>2019-10-14'A'14:50:10</td>
+                                        <td>Loic Perso</td>
+                                        <td><a href="?page=profile&pid=76561198263071471">76561198263071471</a></td>
+                                        <td>Warn</td>
+                                        <td><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#descSanction">Ouvrir </button></td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#supprSanction">Supprimer</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Fin Sanction -->
+                            <!-- Début Remboursement -->
+                            <div class="tab-pane fade" id="remboursement" role="tabpanel" aria-labelledby="tab-1-5">
+                                <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target="#addRemboursement">Ajouter un remboursement</button>
+                                <table id="order-listing" class="table" cellspacing="0">
+                                    {{ table_refund|raw }}
+                                </table>
+                            </div>
+                            <!-- Fin Remboursement -->
+                            <div class="tab-pane fade" id="conteneur-2-6" role="tabpanel" aria-labelledby="tab-1-6">
+                                <h4 class="card-title">Liste des conteneurs</h4>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table id="homeTable" class="table" cellspacing="0">
+                                            {{ table_container|raw }}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="inventairev-2-7" role="tabpanel" aria-labelledby="tab-1-7">
+                                Test7
+                            </div>
+                            <div class="tab-pane fade" id="inventairep-2-8" role="tabpanel" aria-labelledby="tab-1-8">
+                                Test8
+                            </div>
+                        </div>
+                        <?php
+                            if (PERMISSION['edit']['player']) {
+                                ?>
+                        <!-- Modal d'édition Général -->
+                        <div class="modal fade" id="editiongeneral" tabindex="-1" role="dialog"
+                             aria-labelledby="editiongeneral" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modifrapidejoueur">Modal d'éditons
+                                            Général</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card-body">
+                                            <div class="alert alert-fill-info" role="alert">
+                                                <i class="mdi mdi-alert-circle"></i> Merci de ne pas mettre
+                                                de nombre après la virgule dans Compte Bancaire & Argent
+                                                Cash.
+                                            </div>
+                                            <form class="forms-sample">
+                                                <!-- Début Ligne 1 -->
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        <label for="nomrp">Nom RP</label>
+                                                        <div class="alert alert-secondary">{{ profile.player.name }}</div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label>Alias</label>
+                                                        <div class="alert alert-secondary">{{ profile.player.alias }}</div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label>Player ID</label>
+                                                        <div class="alert alert-secondary">{{ profile.player.pid }}</div>
+                                                    </div>
+                                                </div>
+                                                <!-- Fin Ligne 1 -->
+                                                <!-- Début Ligne 2 -->
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        <label for="banque">Première Connexion / Dernière
+                                                            Connexion</label>
+                                                        <div class="alert alert-secondary">{{ profile.player.connect_first ~ ' / ' ~ profiler.player.connect_last }}</div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="banque">Temps de Jeux</label>
+                                                        <div class="alert alert-secondary">{{ profile.player.playtime }}</div>
+                                                    </div>
+                                                </div>
+                                                <!-- Fin Ligne 2 -->
+                                                <!-- Début Ligne 3 -->
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        <label for="banque">Argent Cash</label>
+                                                        {% if permission.edit.players.money %}
+                                                        <input id="e_cash" class="form-control"
+                                                               value="{{ profile.edit_var.cash }}">
+                                                        {% else %}
+                                                        <div class="alert alert-secondary">{{ profile.player.cash }}</div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="banque">Compte Bancaire</label>
+                                                        {% if permission.edit.players.money %}
+                                                        <input id="e_bank" class="form-control"
+                                                               value="{{ profile.edit_var.bank }}">
+                                                        {% else %}
+                                                        <div class="alert alert-secondary">{{ profile.player.bank }}</div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <!-- Fin Ligne 3 -->
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        <label for="coplevel">Cop Level</label>
+                                                        {% if permission.edit.players.cop %}
+                                                        <select id="e_cop" class="form-control">
+                                                            {{ profile.edit_var.cop|raw }}
+                                                        </select>
+                                                        {% else %}
+                                                        <div class="alert alert-secondary">{{ profile.player.coplevel }}</div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="medilevel">Medic Level</label>
+                                                        {% if permission.edit.players.medic %}
+                                                        <select id="e_med" class="form-control">
+                                                            {{ profile.edit_var.medic|raw }}
+                                                        </select>
+                                                        {% else %}
+                                                        <div class="alert alert-secondary">{{ profile.player.mediclevel }}</div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="adminlevel">Admin Level</label>
+                                                        {% if permission.edit.players.admin %}
+                                                        <select id="e_admin" class="form-control">
+                                                            {{ profile.edit_var.admin|raw }}
+                                                        </select>
+                                                        {% else %}
+                                                        <div class="alert alert-secondary">{{ profile.player.adminlevel }}</div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <button id="sendEdit" type="button"
+                                                    class="btn btn-outline-success" data-dismiss="modal">
+                                                Valider
+                                            </button>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                    data-dismiss="modal" onclick="CancelEdit()">Anuler
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal d'édition Général -->
+                        <?php if (PERMISSION['edit']['player_delete']) { ?>
+                        <div class="modal fade" id="supprutilisateur" tabindex="-1" role="dialog"
+                             aria-labelledby="supprutilisateur" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel-3"> Confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Vous êtes sur le point de suprimer le profil de ...</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-success"
+                                                data-dismiss="modal" onclick="showSuccessToast()">
+                                            Valider
+                                        </button>
+                                        <!-- Lors qu'il y a une erreur : onclick="showSuccessToast()" -->
+                                        <button type="button" class="btn btn-outline-danger"
+                                                data-dismiss="modal" onclick="CancelEdit()">Anuler
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                                }
+                            }
+                            ?>
+                        <div class="modal fade" id="Licences" tabindex="-1" role="dialog"
+                             aria-labelledby="Licences" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel-3">Licences</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <div class="Licence_line">
+                                                <h4>Licences Civil</h4>
+                                                {{ profile.player.license_civ|raw }}
+                                            </div>
+                                            <div class="Licence_line">
+                                                <h4>Licences Cop</h4>
+                                                {{ profile.player.license_cop|raw }}
+                                            </div>
+                                            <div class="Licence_line">
+                                                <h4>Licences Médic</h4>
+                                                {{ profile.player.license_med|raw }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger"
+                                                data-dismiss="modal">Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="VitrualInv" tabindex="-1" role="dialog"
+                             aria-labelledby="VitrualInv" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel-4">Inventaire Virtuel</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <h5>Inventaire Virtuel</h5>
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Objet</th>
+                                                <th>Quantité</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {{ profile.player.inventory_civ_virt|raw }}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger"
+                                                data-dismiss="modal">Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Ends -->
+                        <!-- Début Modal AddSanction -->
+                        <div class="modal" id="addSanction" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Ajout d'une sanction</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label>Type de sanction</label>
+                                        <select class="form-control border-danger" id="addSanction">
+                                            <option>Warn</option>
+                                            <option>Kick</option>
+                                            <option>Bannissement</option>
+                                        </select>
+                                        <label>Description de la sanction</label>
+                                        <textarea id="textSanction" class="form-control" name="textSanction" required=""></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-success" data-dismiss="modal" onclick="showSuccessToast()">
+                                            Confirmer
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="showSuccessDesc()">
+                                            Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal AddSanction -->
+                        <!-- Début Modal Description Sanction -->
+                        <div class="modal" id="descSanction" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Raison</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Guillaume sale fils de pute travaille plus vite.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="showSuccessDesc()">
+                                            Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal Description Sanction -->
+                        <!-- Début Modal Supprimer Sanction -->
+                        <div class="modal" id="supprSanction" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirmation</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Vous êtes sur le point de suprimer l'avertissment de ...</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-success" data-dismiss="modal" onclick="showSuccessToast()">
+                                            Confirmer
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="showDangerToast()">
+                                            Anuler
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal Supprimer Sanction -->
+                        <!-- Début Modal AddRemboursement -->
+                        <div class="modal" id="addRemboursement" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Ajouter un remboursement</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label>Montant</label>
+                                        <input id="refund_amount" class="form-control" name="montant" type="number">
+                                        <label>Raison du remboursement</label>
+                                        <textarea id="refund_msg" class="form-control" name="textRemboursement"></textarea>
+                                        <label>Preuves</label>
+                                        <small class="text-gray">(Facultatif)</small>
+                                        <textarea id="refund_evidence" class="form-control" name="evidenceRemboursement"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="SendRefund" class="btn btn-outline-success" data-dismiss="modal">
+                                        Confirmer
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="CancelRefund()">
+                                            Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal AddRemboursement -->
+                        <!-- Début Modal Description Remboursement -->
+                        <div class="modal" id="descRemboursement" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Raison</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Raison :</h4>
+                                        <p id="refundDesc"><b>DESC HERE</b></p>
+                                        <br>
+                                        <h4>Preuves :</h4>
+                                        <p id="refundEvi"><b>EVI HERE</b></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                                            Fermer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin Modal Description Remboursement -->
+
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block style %}
+    <style>
+        .Licence_line {
+            margin-bottom: 3px;
+        }
+
+        .btn {
+            margin-bottom: 5px;
+            margin-right: 3px;
+        }
+    </style>
+{% endblock %}
+{% block script %}
+    <script>
+        $(function () {
+            {%  if permission.edit.players.edit  %}
+                $("#sendEdit").on('click', function (e) {
+                    e.preventDefault();
+
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "editPlayer",
+                            pid: "{{ profile.player.pid }}",
+                            cash: $("#e_cash").val(),
+                            bank: $("#e_bank").val(),
+                            cop: $("#e_cop").val(),
+                            med: $("#e_med").val(),
+                            admin: $("#e_admin").val()
+                        },
+
+                        function (data) {
+                            ReqReponse(data);
+                            if (data === 'Success') {
+                                SuccessEdit();
+                                {% if permission.edit.players.money %} $("#cash").text(formatNumber($("#e_cash").val()) + " €"); {% endif %}
+                                {% if permission.edit.players.money %} $("#bank").text(formatNumber($("#e_bank").val()) + " €"); {% endif %}
+                                {% if permission.edit.players.cop %} $("#coplvl").text($("#e_cop option:selected").text()); {% endif %}
+                                {% if permission.edit.players.med %} $("#medlvl").text($("#e_med option:selected").text()); {% endif %}
+                                {% if permission.edit.players.admin %} $("#adminlvl").text($("#e_admin option:selected").text()); {% endif %}
+                            }
+
+                        },
+                        'text'
+                    );
+                });
+{% endif %}
+            {%  if permission.staff.refund  %}
+
+
+                $("#SendRefund").on('click', function (e) {
+                    e.preventDefault();
+
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "refundPlayer",
+                            pid: "{{ profile.player.pid }}",
+                            amount: $("#refund_amount").val(),
+                            message: $("#refund_msg").val(),
+                            evidence: $("#refund_evidence").val()
+                        },
+
+                        function (data) {
+                            ReqReponse(data);
+                            if (data === 'Success') {
+                                SuccessRefund()
+                                setTimeout(function(){location.reload()}, 2000);
+                            }
+
+                        },
+                        'text'
+                    );
+                });
+{% endif %}
+            {% if permission.edit.players.license %}
+                $('[id^=EditLicense]').on('click', function (e) {
+                    e.preventDefault();
+                    let value = "0";
+                    if ($(this).hasClass("btn-success")) value = "1";
+                    var space = $(this);
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "editPlayerLicense",
+                            pid: "{{ profile.player.pid }}",
+                            type: this.id.substring(12, 15),
+                            name: this.id.substring(16, this.id.lenght),
+                            value: value
+                        },
+                        function (data) {
+                            ReqReponse(data);
+                            if (data === 'Success') {
+                                if (space.hasClass("btn-success")) {
+                                    space.attr("class", "btn btn-danger btn-fw");
+                                } else {
+                                    space.attr("class", "btn btn-success btn-fw");
+                                }
+                            }
+                        },
+                        'text'
+                    );
+                });
+{% endif %}
+            {% if permission.edit.vehicle.delete %}
+                $('[id^=DeleteVehicle]').on('click', function (e) {
+                    e.preventDefault();
+                    let space = this;
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "deleteVehicle",
+                            id: this.id.substring(13, this.id.lenght),
+                        },
+                        function (data) {
+                            ReqReponse(data);
+                            if (data === 'Success') {
+                                VehicleDeleted();
+                                i = space.parentNode.parentNode.rowIndex;
+                                o = space.parentNode.parentNode.parentNode.parentNode.id;
+                                document.getElementById(o).deleteRow(i);
+
+                            }
+                        },
+                        'text'
+                    );
+                });
+            {% endif %}
+            {% if permission.edit.home.delete %}
+                $('[id^=DeleteHome]').on('click', function (e) {
+                    e.preventDefault();
+                    let space = this;
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "deleteHome",
+                            id: this.id.substring(10, this.id.lenght),
+                        },
+                        function (data) {
+                            ReqReponse(data);
+                            if (data === 'Success') {
+                                HomeDeleted();
+                                i = space.parentNode.parentNode.rowIndex;
+                                document.getElementById('homeTable').deleteRow(i);
+
+                            }
+                        },
+                        'text'
+                    );
+                });
+            {% endif %}
+            {% if permission.A %}
+
+                $('[id^=refundDescButton]').on('click', function (e) {
+                    e.preventDefault();
+                    let ID = this.id.substring(16,this.id.length);
+                    let refundDescMessageID = "M_raison"+ID;
+                    let refundEvidenceMessageID = "M_evidence"+ID;
+                    $("#refundDesc").html($('#'+refundDescMessageID).html());
+                    $("#refundEvi").html($('#'+refundEvidenceMessageID).html());
+
+                });
+            {% endif %}
+        });
+
+        function formatNumber(nStr) {
+            return parseInt(nStr);
+        }
+    </script>
+{% endblock %}
+
+
+
+

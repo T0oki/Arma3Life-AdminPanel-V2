@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="css/style.css">
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100">
+            <div class="content-wrapper full-page-wrapper d-flex align-items-center auth-pages">
+                <div class="card col-lg-4 mx-auto">
+                    <div class="card-body px-5 py-5">
+                        <h3 class="card-title text-left mb-3">Connexion au Panel Admin</h3>
+                        <form>
+                            <div id="InfBar" role="alert" class="alert"></div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control p_input" id="mail" autofocus="autofocus">
+                            </div>
+                            <div class="form-group">
+                                <label>Mot de Passe</label>
+                                <input type="password" class="form-control p_input" id="pass">
+                            </div>
+                            <div class="form-group d-flex align-items-center justify-content-between">
+                                <a href="{{ path_for('register') }}" class="forgot-pass">Vous n'avez pas de compte ?</a>
+                            </div>
+                            <div class="text-center">
+                                <button id="login" class="btn btn-primary btn-block enter-btn">Connexion</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- content-wrapper ends -->
+        </div>
+        <!-- row ends -->
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#InfBar").hide();
+
+        $("#login").click(function(e){
+            e.preventDefault();
+
+            if ($("#mail").val() !== "" && $("#pass").val() !== "") {
+                $.post(
+                    '{{ path_for('r_connect') }}',
+                    {
+                        mail : $("#mail").val(),
+                        pass : $("#pass").val()
+                    },
+
+                    function(data){
+
+                        if(data === 'Logged'){
+                            Alert("success", "Connexion..");
+                            $(location).attr('href', '/');
+                        } else {
+                            switch (data) {
+                                case 'NO_INFORMATION':
+                                    Alert("info", "Veuillez remplir tous les champs");
+                                    break;
+                                case 'DENIED':
+                                    Alert("danger", "Adresse email ou mot de passe incorrect");
+                                    break;
+                                case 'DENIED_DISABLE':
+                                    Alert("danger", "Votre compte est désactivé");
+                                    break;
+                                default:
+                                    alert(data);
+                            }
+                        }
+                    },
+                    'text'
+                );
+            } else { Alert("info", "Veuillez remplir tous les champs"); }
+
+        });
+    });
+    function Alert(color, text) {
+        $("#InfBar").show();
+        $("#InfBar").removeClass();
+        $("#InfBar").addClass("alert alert-"+color);
+        $("#InfBar").text(text);
+
+    };
+</script>

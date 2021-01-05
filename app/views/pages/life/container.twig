@@ -1,0 +1,16 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Liste des conteneurs</h4>
+            <div class="row">
+                <div class="col-12">
+                    <table id="order-listing" class="table" cellspacing="0">
+                        {{ table_container|raw }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

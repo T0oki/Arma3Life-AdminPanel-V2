@@ -1,0 +1,138 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Liste des Joueurs</h4>
+            <div class="row">
+                <div class="col-12">
+                    <table id="order-listing" class="table" cellspacing="0">
+                        {{ table_player|raw }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editionrapide" tabindex="-1" role="dialog" aria-labelledby="editionrapide"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modifrapidejoueur">Modal d'éditons rapide</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="alert alert-fill-info" role="alert">
+                            <i class="mdi mdi-alert-circle"></i> Merci de ne pas mettre de nombre après la virgule
+                            dans Compte Bancaire & Argent Cash.
+                        </div>
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <label>ID</label>
+                                <div class="alert alert-secondary" id="editID">1</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nomrp">Nom RP</label>
+                                <div class="alert alert-secondary" id="editName">RP NAME</div>
+                            </div>
+                            <div class="form-group">
+                                <label>Player ID</label>
+                                <div class="alert alert-secondary" id="editPid">PID</div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col">
+                                    <label for="banque">Argent Cash</label>
+                                    <input class="form-control" id="editCash" type="number">
+                                </div>
+                                <div class="col">
+                                    <label for="banque">Compte Bancaire</label>
+                                    <input class="form-control" id="editBank" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col">
+                                    <label for="coplevel">Cop Level</label>
+                                    <select class="form-control" id="coplevel">
+                                        {{ dropEdit.cop|raw }}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="medilevel">Medic Level</label>
+                                    <select class="form-control" id="medilevel">
+                                        {{ dropEdit.medic|raw }}
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="adminlevel">Admin Level</label>
+                                    <select class="form-control" id="adminlevel">
+                                        {{ dropEdit.admin|raw }}
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="sendModif" class="btn btn-outline-success" data-dismiss="modal">Valider
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal"
+                            onclick="CancelEdit()">Anuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        let row;
+        $(function () {
+            $(".btnModifier").on('click', function (e) {
+                e.preventDefault();
+                let i = this.parentNode.parentNode.rowIndex;
+                row = document.getElementById("order-listing").rows[i];
+                $("#editID").text(row.cells[0].textContent);  // UID
+                $("#editName").text(row.cells[1].textContent); // Name
+                $("#editPid").text(row.cells[2].textContent); // PID
+                $("#editCash").val(row.cells[3].textContent.replace(/\./g,'').replace(/€/g,'').replace(/ /g, '')); // CASH
+                $("#editBank").val(row.cells[4].textContent.replace(/\./g,'').replace(/€/g,'').replace(/ /g, '')); // Bank
+                $("#coplevel").val(row.cells[5].textContent); // Cop
+                $("#medilevel").val(row.cells[7].textContent); // Medic
+                $("#adminlevel").val(row.cells[9].textContent); // Admin
+
+            });
+            $("#sendModif").on('click', function (e) {
+                e.preventDefault();
+                $.post(
+                    '{{ path_for('r_request') }}',
+                    {
+                        req: "editPlayer",
+                        pid: $("#editPid").text(),
+                        cash: $("#editCash").val(),
+                        bank: $("#editBank").val(),
+                        cop: $("#coplevel").val(),
+                        med: $("#medilevel").val(),
+                        admin: $("#adminlevel").val()
+                    },
+
+                    function (data) {
+                        ReqReponse(data);
+                        if (data === 'Success') {
+                            SuccessEdit();
+                            row.cells[3].textContent = $("#editCash").val();
+                            row.cells[4].textContent = $("#editBank").val();
+                            row.cells[8].textContent = $("#coplevel option:selected").text();
+                            row.cells[6].textContent = $("#medilevel option:selected").text();
+                            row.cells[10].textContent = $("#adminlevel option:selected").text();
+                        }
+
+                    },
+                    'text'
+                );
+
+            });
+        });
+    </script>
+{% endblock %}

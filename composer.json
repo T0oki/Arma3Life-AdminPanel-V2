@@ -1,0 +1,34 @@
+{
+    "name": "Arma3LifeAdminPanel",
+    "description": "Arma3 life server administration panel",
+    "author": {
+        "name": "Tooki",
+        "email": "contact@anthasia.fr",
+        "homepage": "https://anthasia.fr"
+    },
+    "require": {
+        "php": ">=7.2",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-simplexml": "*",
+        "pimple/pimple": "^3.0",
+        "psr/http-message": "^1.0",
+        "nikic/fast-route": "^1.0",
+        "psr/container": "^1.0",
+        "slim/twig-view": "2.5.1",
+        "swiftmailer/swiftmailer": "~5.4.3",
+        "respect/validation": "~1.1.9",
+        "slim/csrf": "~0.7.0",
+        "ext-pdo": "*"
+    },
+    "provide": {
+        "psr/http-message-implementation": "1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Slim\\": "Slim",
+            "App\\": "app/",
+            "Panel\\": "panel/"
+        }
+    }
+}

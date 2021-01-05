@@ -1,0 +1,47 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <h1>Me contacter</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda facilis harum hic! Accusamus amet eius iste
+        labore laboriosam provident quae sed soluta, sunt tempore. Dolor esse nemo praesentium reiciendis sunt.</p>
+    {% if flash.success %}
+        <div class="alert alert-success">
+            {{ flash.success }}
+        </div>
+    {% endif %}
+    {% if flash.error %}
+        <div class="alert alert-danger">
+            {{ flash.error }}
+        </div>
+    {% endif %}
+
+    <form action="{{ path_for('contact') }}" method="post">
+
+        {{ csrf() }}
+
+        <div class="form-group{% if flash.errors.name %} has-error{% endif %}">
+            <label for="name">Votre nom</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{ old.name }}" required>
+            {% if flash.errors.name %}
+                <span class="help-block">{{ flash.errors.name }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group{% if flash.errors.email %} has-error{% endif %}">
+            <label for="email">Votre email</label>
+            <input type="email" class="form-control" name="email" id="email" value="{{ old.email }}" required>
+            {% if flash.errors.email %}
+                <span class="help-block">{{ flash.errors.email }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group{% if flash.errors.content %} has-error{% endif %}">
+            <label for="content">Votre message</label>
+            <textarea type="text" class="form-control" name="content" id="content" required>{{ old.content }}</textarea>
+            {% if flash.errors.content %}
+                <span class="help-block">{{ flash.errors.content }}</span>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Envoyer">
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Liste des gangs</h4>
+            <div class="row">
+                <div class="col-12">
+                    <table id="order-listing" class="table">
+                        {{ table_gang|raw }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="listemembre" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel-3">Liste des Membres</h5>
+                </div>
+                <div class="modal-body">
+                    <table id="order-listing2" class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="MembersListe">
+                            <tr>
+                                <td>Chargement</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {% if permission.edit.gang.edit %}
+        <script>
+            $(function () {
+                $(".showMembre").on('click', function (e) {
+                    e.preventDefault();
+                    let i,row;
+                    $("#MembersListe").html("<tr><td>Chargement</td></tr>");
+                    i = this.parentNode.parentNode.rowIndex;
+                    row = document.getElementById("order-listing").rows[i];
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "getGangMember",
+                            gangid: row.cells[0].textContent
+                        },
+
+                        function (data) {
+                            ReqReponse(data);
+
+                            if (data.startsWith('<tr>')) {
+                                $("#MembersListe").html(data);
+                                delMemb();
+                            }
+                        },
+                        'text'
+                    );
+                });
+
+                function delMemb() {
+                    $(".RetirerMembre").on('click', function (e) {
+                        e.preventDefault();
+                        let i,row,pid;
+                        i = this.parentNode.parentNode.rowIndex;
+                        row = document.getElementById("order-listing2").rows[i];
+                        pid = row.cells[0].childNodes[0].href;
+                        pid = pid.substring(40, pid.length);
+                        $.post(
+                            '{{ path_for('r_request') }}',
+                            {
+                                req: "removeGangMember",
+                                pid: pid
+                            },
+
+                            function (data) {
+                                ReqReponse(data);
+
+                            },
+                            'text'
+                        );
+                    });
+                }
+            });
+        </script>
+    {% endif %}
+{% endblock %}

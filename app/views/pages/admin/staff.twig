@@ -1,0 +1,202 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Ajouter un utilisateur</h4>
+                    <p class="card-description"> Ajoutuer un utilisateur permet de lui donner accès à certaines partie du site.</p>
+                    <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target="#addStaff">Ajouter un Utilisateur</button>
+                    <hr>
+                    <h4 class="card-title">Groupe d'utilisateur</h4>
+                    <p class="card-description"> Les groupes d'utilisateur reunisse les differentes persmission disponible sur le Panel.</p>
+                    <button class="btn btn-outline-success mr-2" data-toggle="modal" data-target="#groupe">Crée un Groupe</button>
+                    <hr>
+                    <h4 class="card-title">Liste des membres</h4>
+                    <table id="order-listing" class="table" cellspacing="0">
+                        {{ staffList|raw }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="groupe" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel-3">Créer un Groupe</h5>
+                </div>
+                <div class="modal-body">
+                    <h5 class="card-title">Permission du groupe</h5>
+                    <form class="forms-sample">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label">Nom du Groupe</label>
+                                        <div class="col-sm-9"><input type="text" class="form-control"></div>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> isAdmin </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> view_player </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> view_vehicle </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> view_home </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> view_gang </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> view_container </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_player </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_player_license </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_player_money </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_player_cop </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_player_med </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_player_delete </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_vehicle_delete </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_home </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_home_delete </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_gang </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_gang_members </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> edit_container </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> staff_manage </label>
+                                    </div>
+                                    <div class="form-check form-check-flat">
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> staff_logs </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" data-dismiss="modal" onclick="showSuccessToast()">
+                        Confirmer
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="showDangerToast()">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addStaff" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel-3">Ajouter un Membre</h5>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <label class="form-check-label">Choix du membre</label>
+                        <select class="form-control border-primary" id="addName">
+                            <?= Staff::dropPlayer() ?>
+                        </select>
+                        <label class="form-check-label">Choix du Groupe</label>
+                        <select class="form-control border-primary" id="addRank">
+                            <?= Staff::dropGroup() ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="addStaffButton" class="btn btn-outline-success" data-dismiss="modal">
+                        Confirmer
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="showDangerToast()">
+                        Anuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modif" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel-3">Modifier le groupe d'utilisateur</h5>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <label class="form-check-label">Choix du nouveau groupe</label>
+                        <select class="form-control border-primary" id="addRank">
+                            <?= Staff::dropGroup() ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="addStaffButton" class="btn btn-outline-success" data-dismiss="modal">
+                        Confirmer
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="showDangerToast()">
+                        Anuler
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("#addStaffButton").click(function (e) {
+                e.preventDefault();
+
+                $.post(
+                    'master/controller/requester.php',
+                    {
+                        req: "addStaff",
+                        pid: $("#addName").val(),
+                        rank: $("#addRank").val()
+                    },
+
+                    function (data) {
+                        ReqReponse(data);
+                        if (data === 'Success') {
+                            successAddStaff();
+                        }
+                    },
+                    'text'
+                );
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row p-3">
+                        <div class="align-self-top">
+                            <p class="card-title mb-1 font-weight-bold">Nombre de Joueurs</p>
+                            <h3 class="mb-0">{{ values.players }}</h3>
+                        </div>
+                        <div class="align-self-center flex-grow text-right">
+                            <i class="icon-lg mdi mdi-account-circle text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row p-3">
+                        <div class="align-self-top">
+                            <p class="card-title mb-1 font-weight-bold">Argent Global</p>
+                            <h3 class="mb-0">{{ values.money }}</h3>
+                        </div>
+                        <div class="align-self-center flex-grow text-right">
+                            <i class="icon-lg mdi mdi-cash-multiple text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row p-3">
+                        <div class="align-self-top">
+                            <p class="card-title mb-1 font-weight-bold">Nombre de Véhicules</p>
+                            <h3 class="mb-0">{{ values.vehicles }}</h3>
+                        </div>
+                        <div class="align-self-center flex-grow text-right">
+                            <i class="icon-lg mdi mdi-car-side text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row p-3">
+                        <div class="align-self-top">
+                            <p class="card-title mb-1 font-weight-bold">Nombre de Maison</p>
+                            <h3 class="mb-0">{{ values.houses }}</h3>
+                        </div>
+                        <div class="align-self-center flex-grow text-right">
+                            <i class="icon-lg mdi mdi-garage text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/29/294bdbfa9cab8c954d66a87a58f00769fdcc6fd2_full.jpg"
+                             class="img-lg rounded">
+                        <div class="ml-3">
+                            <h6>Tooki</h6>
+                            <p class="text-muted">contact@anthasia.fr</p>
+                            <p class="mt-2 text-success font-weight-bold">Développeur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex flex-row">
+                        <img src="https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/60/60b5f679d2d8f1909c2eb8a0b1d3d013c47ba075_full.jpg"
+                             class="img-lg rounded">
+                        <div class="ml-3">
+                            <h6>Léo Iskia</h6>
+                            <p class="text-muted">contact@iskia.fr</p>
+                            <p class="mt-2 text-success font-weight-bold">Développeur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

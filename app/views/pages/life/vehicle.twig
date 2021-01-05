@@ -1,0 +1,48 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Liste des véhicules</h4>
+            <div class="row">
+                <div class="col-12">
+                    <table id="order-listing" class="table" cellspacing="0">
+                        {{ table_vehicle|raw }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    {% if permission.edit.vehicle.delete %}
+    <script>
+        $(function () {
+                $('[id^=DeleteVehicle]').on("click", function (e) {
+                    e.preventDefault();
+                    let space = this;
+                    $.post(
+                        '{{ path_for('r_request') }}',
+                        {
+                            req: "deleteVehicle",
+                            id: this.id.substring(13, this.id.length),
+                        },
+                        function (data) {
+                            ReqReponse(data);
+                            if (data === 'Success') {
+                                VehicleDeleted();
+                                i = space.parentNode.parentNode.rowIndex;
+                                document.getElementById("order-listing").deleteRow(i);
+                            }
+                        },
+                        'text'
+                    );
+                });
+        });
+
+        function formatNumber(nStr) {
+            return nStr.number();
+        }
+    </script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Liste des Rembousements</h4>
+            <div class="row">
+                <div class="col-12">
+                    <p class="card-description">
+                        Les remboursement se font par le panel uniquement, cela permet de garder une trace sur
+                        tout les
+                        remboursement effectuer.
+                        <br>Si vous souhaiter consulter les remboursement effectuer sur un joueurs en question,
+                        vous
+                        pouvez vous rendre sur son profile.
+                        <br>Pour effecter un remboursement clicker sur le bouton si-dessous ou rendez-vous
+                        directement
+                        sur le profile du joueurs dans l'onglet remboursement.
+                    </p>
+                    <button class="btn btn-outline-primary mr-2" data-toggle="modal"
+                            data-target="#addRemboursement">
+                        Ajouter un remboursement
+                    </button>
+                    <hr>
+                    <table class="table" cellspacing="0">
+                        {{ table_refund|raw }}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="addRemboursement" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter un remboursement</h5>
+                </div>
+                <div class="modal-body">
+                    <label>Joueur UID</label>
+                    <input id="refund_uid" class="form-control" name="montant" type="number">
+                    <label>Montant</label>
+                    <input id="refund_amount" class="form-control" name="montant" type="number">
+                    <label>Raison du remboursement</label>
+                    <textarea id="refund_msg" class="form-control" name="textRemboursement"></textarea>
+                    <label>Preuves</label>
+                    <small class="text-gray">(Facultatif)</small>
+                    <textarea id="refund_evidence" class="form-control" name="evidenceRemboursement"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="SendRefund" class="btn btn-outline-success" data-dismiss="modal"
+                    ">
+                    Confirmer
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="CancelRefund()">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="descRemboursement" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Raison</h5>
+                </div>
+                <div class="modal-body">
+                    <h4>Raison :</h4>
+                    <p id="refundDesc"><b>DESC HERE</b></p>
+                    <br>
+                    <h4>Preuves :</h4>
+                    <p id="refundEvi"><b>EVI HERE</b></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('[id^=refundDescButton]').click(function (e) {
+            e.preventDefault();
+            let ID = this.id.substring(16, this.id.length);
+            let refundDescMessageID = "M_raison" + ID;
+            let refundEvidenceMessageID = "M_evidence" + ID;
+            $("#refundDesc").html($('#' + refundDescMessageID).html());
+            $("#refundEvi").html($('#' + refundEvidenceMessageID).html());
+
+        });
+        $("#SendRefund").click(function (e) {
+            e.preventDefault();
+
+            $.post(
+                '{{ path_for('r_request') }}',
+                {
+                    req: "refundPlayer",
+                    pid: $("#refund_uid").val(),
+                    amount: $("#refund_amount").val(),
+                    message: $("#refund_msg").val(),
+                    evidence: $("#refund_evidence").val()
+                },
+
+                function (data) {
+                    ReqReponse(data);
+                    if (data === 'Success') {
+                        SuccessRefund();
+                        setTimeout(function(){location.reload()}, 2000);
+                    } else if (data === 'InvalideTarget') {
+                        NoExistPlayerRefund();
+                    }
+
+                },
+                'text'
+            );
+        });
+    });
+</script>
+{% endblock %}

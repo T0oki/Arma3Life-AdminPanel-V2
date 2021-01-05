@@ -1,0 +1,88 @@
+<!doctype HTML>
+<html lang="fr">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Panel Admin V2</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{{ web_url }}vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="{{ web_url }}vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="{{ web_url }}vendors/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="{{ web_url }}vendors/iconfonts/flag-icon-css/css/flag-icon.min.css">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ web_url }}css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{{ web_url }}vendors/images/favicon.png"/>
+
+    <link rel="stylesheet"
+          href="https://www.bootstrapdash.com/demo/corona/jquery/template/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet"
+          href="https://www.bootstrapdash.com/demo/corona/jquery/template/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    {% block style %}{% endblock %}
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <h1>{{ permission.name }}</h1>
+                <!--<a class="navbar-brand brand-logo" href="index-2.html"><img src="images/logo.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="index-2.html"><img src="images/logo-mini.svg" alt="logo" /></a>-->
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="mdi mdi-format-line-spacing"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            {% include 'navbar.twig' %}
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer class="footer">
+    <!-- Footer -->
+
+
+    <!-- plugins:js -->
+    <script src="{{ web_url }}vendors/js/vendor.bundle.base.js"></script>
+    <script src="{{ web_url }}vendors/js/vendor.bundle.addons.js"></script>
+    <script src="{{ web_url }}js/off-canvas.js"></script>
+    <script src="{{ web_url }}js/hoverable-collapse.js"></script>
+    <script src="{{ web_url }}js/misc.js"></script>
+    <script src="{{ web_url }}js/settings.js"></script>
+    <script src="{{ web_url }}js/todolist.js"></script>
+    <script src="{{ web_url }}js/data-table.js"></script>
+    <script src="{{ web_url }}js/dashboard.js"></script>
+    <script src="{{ web_url }}js/dropify.js"></script>
+    <script src="{{ web_url }}js/toast.js"></script>
+    <script src="{{ web_url }}js/desktop-notification.js"></script>
+    <script src="{{ web_url }}js/file-upload.js"></script>
+    <script src="{{ web_url }}js/typeahead.js"></script>
+    <script src="{{ web_url }}js/ArmaPanel.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Scripts -->
+
+    {% block script %}{% endblock %}
+
+    <div class="container-fluid clearfix footer fixed-bottom">
+        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019 <a
+                    href="https://eclosia.life">Eclosia</a>. Tous droits réservés.</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Le développement une passion<i
+                    class="mdi mdi-heart text-danger"></i></span>
+    </div>
+</footer>
+</html>

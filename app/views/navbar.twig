@@ -1,0 +1,138 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item account-dropdown">
+            <a class="nav-link" data-toggle="collapse" href="#account-dropdown" aria-expanded="false"
+               aria-controls="account-dropdown">
+                <img class="img-sm rounded-circle" src="{{ session.avatar }}" alt="">
+                <p class="mb-0 ml-3 text-light">{{ session.Nom }}</p>
+                <i class="menu-arrow"></i>
+            </a>
+            <p class="mb-0 ml-3 text-light">{{ permission.name }}</p>
+            <div class="collapse" id="account-dropdown">
+                <ul class="nav flex-column sub-menu pl-0">
+                    <li class="nav-item">
+                        <a class="nav-link pl-5" href="{{ path_for('profile') }}">
+                      <span class="menu-icon">
+                        <i class="mdi mdi-account-box"></i>
+                      </span>
+                            <span class="menu-title">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-5" href="#">
+                      <span class="menu-icon">
+                        <i class="mdi mdi-wrench"></i>
+                      </span>
+                            <span class="menu-title">Paramètre</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pl-5" href="{{ path_for('logout') }}">
+                      <span class="menu-icon">
+                        <i class="mdi mdi-power"></i>
+                      </span>
+                            <span class="menu-title">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('home') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-speedometer"></i>
+                </span>
+                <span class="menu-title">Accueil</span>
+            </a>
+        </li>
+        <li class="nav-item nav-category">
+            <span class="nav-link">Life Serveur</span>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('player') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-account-circle"></i>
+                </span>
+                <span class="menu-title">Joueurs</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('vehicle') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-car-side"></i>
+                </span>
+                <span class="menu-title">Véhciules</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('house') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-home-outline"></i>
+                </span>
+                <span class="menu-title">Maisons</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('container') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-treasure-chest"></i>
+                </span>
+                <span class="menu-title">Conteneurs</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('gang') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-account-group"></i>
+                </span>
+                <span class="menu-title">Gangs</span>
+            </a>
+        </li>
+        <li class="nav-item nav-category">
+            <span class="nav-link">Modération Staff</span>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('refund') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-cash-multiple"></i>
+                </span>
+                <span class="menu-title">Remboursement</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="?page=sanctions">
+                <span class="menu-icon">
+                  <i class="mdi mdi-account-minus"></i>
+                </span>
+                <span class="menu-title">Sanction</span>
+            </a>
+        </li>
+        <li class="nav-item nav-category">
+            <span class="nav-link">Administration Staff</span>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ path_for('staff') }}">
+                <span class="menu-icon">
+                  <i class="mdi mdi-account-multiple-plus"></i>
+                </span>
+                <span class="menu-title">Staff</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="#">
+                <span class="menu-icon">
+                  <i class="mdi mdi-file-multiple"></i>
+                </span>
+                <span class="menu-title">Logs</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="#">
+                <span class="menu-icon">
+                  <i class="mdi mdi-database-search"></i>
+                </span>
+                <span class="menu-title">Base de donnée</span>
+            </a>
+        </li>
+    </ul>
+</nav>
